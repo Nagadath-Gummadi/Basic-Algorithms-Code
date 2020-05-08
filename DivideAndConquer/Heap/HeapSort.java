@@ -23,6 +23,7 @@ public class HeapSort {
         for (int i = 0; i < n; i++) {
             percolateUp(sc.nextInt(), a, i);
         }
+        int size=n;
         System.out.println("The Max Heap Representation is:");
         for (int i = 0; i < n; i++) {
             System.out.println(" " + i + ": " + a[i]);
@@ -31,9 +32,11 @@ public class HeapSort {
         while (n > 0) {
             n--;
             int element = deleteFromHeap(a, n);
-            System.out.print(" " + element);
-        
+          a[n]=element;
         }
+        for (int i = 0; i < size; i++) {
+            System.out.println(" " + i + ": " + a[i]);
+        }        
     }
 
     private static void percolateUp(int nextInt, int[] a, int i) throws Exception {
