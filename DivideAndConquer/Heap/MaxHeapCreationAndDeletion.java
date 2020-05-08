@@ -1,87 +1,102 @@
 package Heap;
+
 import static java.lang.Math.ceil;
 import java.util.Scanner;
-public class MaxHeapDeletion {
-    public static void main(String[] args) throws Exception
-    {        
+
+public class MaxHeapCreationAndDeletion {
+
+    public static void main(String[] args) throws Exception {
         System.out.println("Enter max no.of elements:");
-        Scanner sc=new Scanner(System.in);
-        int m=sc.nextInt();
-        int[]a=new int[m];
+        Scanner sc = new Scanner(System.in);
+        int m = sc.nextInt();
+        int[] a = new int[m];
         System.out.println("Enter no.of elements you want to enter:");
-        int n=sc.nextInt();
-        if(n>m)
-        {
+        int n = sc.nextInt();
+        if (n > m) {
             System.out.println("Invalid range");
             System.exit(0);
         }
-        for(int i=0;i<n;i++)
-            a[i]=-1;
-        for(int i=0;i<n;i++)
-        {        
-            percolateUp(sc.nextInt(),a,i);        
-        }    
-        for(int i=0;i<n;i++)
-        {        
-            System.out.println(" "+i+": "+a[i]);        
+        for (int i = 0; i < n; i++) {
+            a[i] = -1;
         }
-        int in=1;
-        System.out.println("Press 1 to delete one element from heap.\nPress any other key to exit ");
-        in=sc.nextInt();
-        while(in==1 && n>=0)
-        {
-            int element=deleteFromHeap(a,n);
-            System.out.println("Deleted Element:"+element);
+        System.out.println("Enter Elements:");
+        for (int i = 0; i < n; i++) {
+            percolateUp(sc.nextInt(), a, i);
+        }
+        System.out.println("The Max Heap Representation is:");
+        for (int i = 0; i < n; i++) {
+            System.out.println(" " + i + ": " + a[i]);
+        }
+        int in = 1;
+        System.out.println("Press 1 to delete one element from heap.\nPress any other key to exit\nEnter Your Option: ");
+        in = sc.nextInt();
+        while (in == 1 && n > 0) {
             n--;
-            System.out.println("Press 1 to delete one element from heap.\nPress any other key to exit ");
-            in=sc.nextInt();
+            int element = deleteFromHeap(a, n);
+            System.out.println("Deleted Element:" + element);
+            System.out.println("After Deleting one element from the heap,The Max Heap is:");
+            for (int i = 0; i < n; i++) {
+                System.out.println(" " + i + ": " + a[i]);
+            }
+            System.out.println("Press 1 to delete one element from heap.\nPress any other key to exit\nEnter Your Option: ");
+            in = sc.nextInt();
         }
     }
-     private static void percolateUp (int nextInt, int[] a, int i) throws Exception{
-        a[i]=nextInt;
-        int temp=0;
-       
-    //    System.out.println("i= "+i+" ;  parent= "+((int)(ceil((double)(i/2)))-1)    );
-        while(i>0 && a[((int)(ceil((double)i/2)))-1]<nextInt )
-        {
-        temp=nextInt;
-        a[i]=a[((int)(ceil((double)i/2)))-1];
-        a[((int)(ceil((double)i/2)))-1]=temp;
-        i=((int)(ceil((double)i/2)))-1;
-        
-        
+
+    private static void percolateUp(int nextInt, int[] a, int i) throws Exception {
+        a[i] = nextInt;
+        int temp = 0;
+        while (i > 0 && a[((int) (ceil((double) i / 2))) - 1] < nextInt) {
+            temp = nextInt;
+            a[i] = a[((int) (ceil((double) i / 2))) - 1];
+            a[((int) (ceil((double) i / 2))) - 1] = temp;
+            i = ((int) (ceil((double) i / 2))) - 1;
         }
-       
-   
-     }
+
+    }
 
     private static int deleteFromHeap(int[] a, int n) {
-        int element=a[0];
-        a[0]=a[n-1];
-        n--;
-        int i=0;
-        int maxchild;
-        maxchild=maximum((2*i+1),(2*i+2),a);
-        int parent=0;
-        while(a[maxchild]>a[parent] )
-        {
-            int temp=a[parent];
-            a[parent]=a[maxchild];
-            a[maxchild]=temp;
-            parent=maxchild;
-            maxchild=maximum((2*i+1),(2*i+2),a);
-                   
+
+        int element = a[0];
+        a[0] = a[n];
+        int parentpos = 0;
+        int parent = a[parentpos];
+        int maxchildpos = 0;
+        int maxchild = 0;
+        if (((2 * parentpos) + 1) < n) {
+            maxchildpos = maxchildposition(a, parentpos, n);
+            maxchild = a[maxchildpos];
+        }
+        while (maxchild > parent) {
+            swap(a, parentpos, maxchildpos);
+            parentpos = maxchildpos;
+            if (((2 * parentpos) + 1) < n) {
+                maxchildpos = maxchildposition(a, parentpos, n);
+                maxchild = a[maxchildpos];
+            } else {
+                break;
+            }
+
         }
         return element;
-        
     }
 
-    private static int maximum(int i, int i0, int[] a) {
-        if(a[i]>a[i0])
-            return i;
-        else
-            return i0;
-        
+    private static int maxchildposition(int[] a, int parentpos, int n) {
+        int i = parentpos;
+        if (((2 * i) + 2) > (n)) {
+            return (2 * i) + 1;
+        }
+        if (a[(2 * i) + 1] > a[(2 * i) + 2]) {
+            return (2 * i) + 1;
+        } else {
+            return (2 * i) + 2;
+        }
     }
-    
+
+    private static void swap(int[] a, int parentpos, int maxchildpos) {
+        int temp = a[parentpos];
+        a[parentpos] = a[maxchildpos];
+        a[maxchildpos] = temp;
+    }
+
 }
