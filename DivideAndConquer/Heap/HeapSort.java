@@ -94,5 +94,4 @@ public class HeapSort {
         a[parentpos] = a[maxchildpos];
         a[maxchildpos] = temp;
     }
-
 }
