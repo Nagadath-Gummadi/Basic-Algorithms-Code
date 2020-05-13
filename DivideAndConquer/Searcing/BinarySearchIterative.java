@@ -1,4 +1,3 @@
-
 package Searching;
 import Searching.ElementSearching;
 import java.util.Scanner;
