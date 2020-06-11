@@ -1,7 +1,6 @@
 package Searching;
 import Searching.ElementSearching;
 import java.util.Scanner;
-
 public class BinarySearchIterative {
     public static void main(String[] args){
         int n;
