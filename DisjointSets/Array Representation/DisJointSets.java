@@ -5,6 +5,7 @@
  */
 package disjointsets;
 
+
 import static java.lang.System.exit;
 import java.util.Arrays;
 import java.util.Scanner;
